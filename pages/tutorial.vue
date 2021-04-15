@@ -1,21 +1,24 @@
 <template>
-  <v-stage
-    ref="stage"
-    @click="clickEvent"
-    @tap="clickEvent"
-    :config="configKonva"
-  >
-    <v-layer ref="layer">
-      <template v-for="(shapeConfig, index) in shapeConfigs">
-        <v-circle
-          v-if="shapeConfig.type == 1"
-          :config="shapeConfig"
-          :key="index"
-        ></v-circle>
-      </template>
-      <v-transformer ref="transformer"></v-transformer>
-    </v-layer>
-  </v-stage>
+  <div>
+    <button @click="test()" value="a">a</button>
+    <v-stage
+      ref="stage"
+      @click="clickEvent"
+      @tap="clickEvent"
+      :config="configKonva"
+    >
+      <v-layer ref="layer">
+        <template v-for="(shapeConfig, index) in shapeConfigs">
+          <v-circle
+            v-if="shapeConfig.type == 1"
+            :config="shapeConfig"
+            :key="index"
+          ></v-circle>
+        </template>
+        <v-transformer ref="transformer"></v-transformer>
+      </v-layer>
+    </v-stage>
+  </div>
 </template>
 <script>
 export default {
@@ -97,13 +100,16 @@ export default {
           .concat([e.target]);
         this.$refs.transformer.getNode().nodes(nodes);
       }
-      if (this.$refs.transformer.getNode().nodes().length >= 2) {
-        // this.$refs.transformer.getNode().nodes()[0].fill = "blue";
+      if (this.$refs.transformer.getNode().nodes().length >= 1) {
         this.$refs.transformer.getNode().nodes()[0].fill("blue");
-      } else {
-        this.$refs.transformer.getNode().nodes()[0].fill("red");
       }
       this.$refs.layer.getNode().draw();
+    },
+    test() {
+      let y = this.$refs.transformer.getNode().nodes()[0].y();
+      for (let i in this.$refs.transformer.getNode().nodes()) {
+        this.$refs.transformer.getNode().nodes()[i].y(y);
+      }
     },
   },
 };
